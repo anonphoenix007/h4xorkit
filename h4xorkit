@@ -1,0 +1,310 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import socket
+import time
+import subprocess
+import requests
+
+def banner():
+    clear()
+    print('''
+              ╻ ╻╻ ╻╻ ╻┏━┓┏━┓   ╺┳╸┏━┓┏━┓╻  ╻┏ ╻╺┳╸
+              ┣━┫┗━┫┏╋┛┃ ┃┣┳┛╺━╸ ┃ ┃ ┃┃ ┃┃  ┣┻┓┃ ┃
+              ╹ ╹  ╹╹ ╹┗━┛╹┗╸    ╹ ┗━┛┗━┛┗━╸╹ ╹╹ ╹
+''')
+    print("                      Author:Phoenix Gibson")
+    print("                    Maintainer:Phoenix Gibson")
+    print("                           Version:1.0")
+    print("               Github@:http://github.com/anonphoenix007")
+    print("                  email: phoenixgibson007@proton.me\n")
+
+def netcheck():
+    try:
+       requests.get("http://github.com")
+    except ConnectionError as e:
+       print(e)
+       exit()
+
+def clear():
+    os.system("clear")
+
+def back():
+    ask = input("Do you want to go back to menu or exit(y to go back to menu and n to exit): ")
+    if ask == "y":
+       main()
+    elif ask == "n":
+       exit()
+    else:
+       print("Unknown option selected,exiting....")
+
+def checkSudo():
+    while os.getuid() != 0:
+       print("[-] h4xorkit must be run as Root or with sudo,exiting...")
+       sys.exit()
+
+    while os.name != 'posix':
+       print("h4xorkit must be run under a *NIX like OS")
+       exit()
+
+def startJohn():
+       print("where is the path to the zip file you want to crack")
+       print("You can choose that with /path/file.zip")
+       zippath=input("JTR ~# ")
+       os.system("zip2john >/tmp/hash %s" % zippath)
+       clear()
+       print("[*] hash extracted for the given zip file is given below")
+       time.sleep(2)
+       os.system("cat /tmp/hash")
+       print("[*] Password cracking will start now")
+       os.system("john /tmp/hash")
+       print("[*] Process completed, Exiting...")
+       back()
+
+def contribs():
+   clear()
+   print("           =======================================|")
+   print("           | ╻ ╻╻ ╻╻ ╻┏━┓┏━┓   ╺┳╸┏━┓┏━┓╻  ╻┏ ╻╺┳╸|")
+   print("           | ┣━┫┗━┫┏╋┛┃ ┃┣┳┛╺━╸ ┃ ┃ ┃┃ ┃┃  ┣┻┓┃ ┃ |")
+   print("           | ╹ ╹  ╹╹ ╹┗━┛╹┗╸    ╹ ┗━┛┗━┛┗━╸╹ ╹╹ ╹ |")
+   print("           =======================================|")
+
+   print("                  Author:Phoenix Gibson")
+   print("                Maintainer:Phoenix Gibson")
+   print("                      Version:1.0")
+   print("          Github@:http://github.com/anonphoenix007")
+   print("              email: phoenixgibson007@proton.me")
+   time.sleep(2)
+   back()
+def main():
+   banner()
+   checkSudo()
+   print()
+   print("    }--------------{+} Coded By Phoenix {+}---------------{")
+   print(" }------------{+}  GitHub.com/anonphoenix/h4xorkit{+}---------{")
+   print("    0)--Http server")
+   print("    1)--Nmap")
+   print("    2)--John the ripper zip file cracking")
+   print("    3)--Host2ip")
+   print("    4)--Cupp wordlist creator")
+   print("    5)--Wifite wifi hacking tool")
+   print("    6)--Commix exploitation tool")
+   print("    7)--Port scanner(limited)")
+   print("    8)-CONTRIBUTORS")
+   print("    99)--EXIT\n")
+
+   choice = input("[User@h4xorkit ~]# ")
+   if choice == "0":
+      server()
+   if choice == "1":
+      nmapScan()
+   elif choice == "2":
+      john()
+   elif choice == "3":
+      host2ip()
+   elif choice == "4":
+      cupp()
+   elif choice == "5":
+      wifite()
+   elif choice == "6":
+      commix()
+   elif choice == "7":
+      portscan()
+   elif choice == "8":
+      contribs()
+   elif choice == "99":
+      exit()
+   while choice != "1" "2" "3" "4" "5" "6" "7" "99":
+        print("[Invalid or No option selected,Please Retry...")
+        break
+
+def portscan():
+    print("")
+    back()
+def server():
+    print("Python HTTP server")
+    port = input("Enter the port number: ")
+#    print("Serving HTTP server on port %s" % port)
+    os.system("python3 /usr/bin/server %s" % port)
+    back()
+
+
+def nmapScan():
+    try:
+       print("Checking if Nmap is installed")
+       if os.path.isfile("/usr/bin/nmap"):
+          print("nmap is installed,continuing...")
+          time.sleep(1)
+          
+       else:
+          print("Nmap is not installed,Installing....")
+          os.system("apt install nmap -y")
+          time.sleep(1)
+       clear()
+       nmapLogo=( '''
+               88b 88 8b    d8    db    88""Yb
+               88Yb88 88b  d88   dPYb   88__dP
+               88 Y88 88YbdP88  dP__Yb  88"""
+               88  Y8 88 YY 88 dP""""Yb 88
+       ''')
+       prompt="[Phoenix@h4xorkit] ~# "
+       print(nmapLogo)
+       target=input("What's your target IPadderss: ")
+       print("   Nmap scan for: %s\n" % target)
+       print("   {1}--Simple Scan [-sV]")
+       print("   {2}--Port Scan [-Pn]")
+       print("   {3}--Operating System Detection [-A]\n")
+       print("   {4}--Exit")
+       response=input(prompt)
+  #    clear()
+       if response == "1":
+          os.system("nmap %s" % target)
+          back()
+       elif response == "2":
+          os.system("nmap -Pn %s" % target)
+          back()
+       elif response == "3":
+          os.system("nmap -A -T4 %s" % target)
+          back()
+       elif response == "4":
+          exit()
+       else:
+          print("unknown option selected,exiting.....")
+          back()
+    except IOError as e:
+       print(e)
+def john():
+   def bannner():
+      banner=('''
+       ##### ####### ######
+           #    #    #     #
+           #    #    #     #
+           #    #    ######
+    #      #    #    #   #
+    #      #    #    #    #
+      #####     #    #     #
+''')
+   print(banner)
+   print("Checking if john is installed,please wait.....")
+   if os.path.isfile("/usr/sbin/john"):
+      print("John is already installed,will continue....")
+      time.sleep(2)
+      startJohn()
+   else:
+      print("John is not installed,installing....")
+      os.system("apt install john -y")
+      time.sleep(1)
+      startJohn()
+
+"""   def startJohn():
+       print("where is the path to the zip file you want to crack")
+       print("You can choose that with /path/file.zip")
+       zippath=input("JTR ~# ")
+       os.system("zip2john >/tmp/hash %s" % zippath)
+       clear()
+       print("[*] hash extracted for the given zip file is given below")
+       time.sleep(2)
+       os.system("cat /tmp/hash")
+       print("[*] Password cracking will start now")
+       os.system("john /tmp/hash")
+       print("[*] Process completed, Exiting...")
+       back()
+"""
+def host2ip():
+    clear()
+    print("""    88  88  dP"Yb  .dP"Y8 888888 oP"Yb. 88 88""Yb""")
+    print("""    88  88 dP   Yb `Ybo."   88   "' dP' 88 88__dP""")
+    print("""    888888 Yb   dP o.`Y8b   88     dP'  88 88""")
+    print("""    88  88  YbodP  8bodP'   88   .d8888 88 88\n""")
+
+    print("Enter a host ")
+    host = input("[host2ip] ~# ")
+    ip = socket.gethostbyname(host)
+    print("   %s has the IP of %s" % (host, ip))
+    back()
+
+def cupp():
+    clear()
+    print("""     dP""b8 88   88 88""Yb 88""Yb""")
+    print("""    dP   `" 88   88 88__dP 88__dP""")
+    print("""    Yb      Y8   8P 88     88""")
+    print("""     YboodP `YbodP' 88     88\n""")
+    print("checking if Cupp is installed")
+    time.sleep(2)
+    if os.path.isfile("/usr/bin/cupp"):
+       os.system("/usr/bin/cupp -i")
+       back()
+    else:
+       print("Cupp is not installed,Installing.....")
+       print("[*] Cupp is being clone from https://github.com/Mebus/cupp.git")
+       os.system("cd /usr/share")
+       os.system("git clone https://github.com/Mebus/cupp.git")
+       os.system("python cupp/cupp.py -i")
+       back()
+
+def wifite():
+    clear()
+    print("""#     # ### ####### ### ####### ####### """)
+    print("""#  #  #  #  #        #     #    #       """)
+    print("""#  #  #  #  #        #     #    #       """)
+    print("""#  #  #  #  #####    #     #    #####   """)
+    print("""#  #  #  #  #        #     #    #       """)
+    print("""#  #  #  #  #        #     #    #       """)
+    print(""" ## ##  ### #       ###    #    #######\n""")
+    print("Checking if wifite is installed")
+    if os.path.isfile("/usr/bin/wifite"):
+       print("Wifite is already installed,Launching......")
+       time.sleep(1)
+       os.system("sudo wifite")
+       back()
+    elif not os.path.isfile("/usr/bin/wifite"):
+       print("Wifite is not installed,trying to install.....")
+       os.system("apt install wifite -y")
+       print("Installed,Now launching wifite for you.....")
+       time.sleep(1)
+       os.system("sudo wifite")
+       back()
+def exit():
+    sys.exit()
+
+def update():
+    os.system("cd /opt")
+    os.system("git clone https://github.com/anonphoenix/h4xorkit")
+
+def commix():
+    clear()
+    print("""                                      __
+   ___   ___     ___ ___     ___ ___ /\_\   __  _
+ /`___\ / __`\ /' __` __`\ /' __` __`\/\ \ /\ \/'\
+/\ \__//\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \ \ \\/>  </
+\ \____\ \____/\ \_\ \_\ \_\ \_\ \_\ \_\ \_\/\_/\_\ https://commixproject.com
+ \/____/\/___/  \/_/\/_/\/_/\/_/\/_/\/_/\/_/\//\/_/ (@commixproject)
+""")
+    print("Automated All in one OS command injection and Exploitation Tool")
+    print("Checking if Commix is installed")
+    if os.path.isfile("/usr/bin/commix"):
+       print("Commix is installed,Launching....")
+       os.system("commix --wizard")
+       back()
+    elif not os.path.isfile("/usr/bin/commix"):
+       try:
+          print("Commix is not installed,Installing....")
+          os.system("apt install commix -y")
+       except error as e:
+          print(e)
+    else:
+         print("[*] Cloning from github")
+         os.system("cd /usr/share && git clone --depth=1 https://github.com/stasinopoulos/commix.git && cd commix")
+         print("[*] Commix is installed")
+         print("[*] Launching Commix")
+         os.system("python3 commix.py --wizard")
+         back()
+
+
+
+banner()
+
+while __name__ == "__main__":
+    netcheck()
+    main()
