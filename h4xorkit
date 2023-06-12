@@ -126,7 +126,7 @@ def server():
     print("Python HTTP server")
     port = input("Enter the port number: ")
 #    print("Serving HTTP server on port %s" % port)
-    os.system("python3 /usr/bin/server %s" % port)
+    os.system("python3 server %s" % port)
     back()
 
 
@@ -300,8 +300,6 @@ def commix():
          print("[*] Launching Commix")
          os.system("python3 commix.py --wizard")
          back()
-
-
 
 banner()
 
